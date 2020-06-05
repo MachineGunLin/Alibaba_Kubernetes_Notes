@@ -10,7 +10,7 @@
 
 比如我们现在在Linux里跑一个HelloWorld程序，这个程序实际上由一组线程组成，分别是{api、main、log、compute}。四个线程共同协作，共享HelloWorld程序的资源，组成了HelloWorld程序的真实工作情况。
 
-![image-20200510215729989](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510215729989.png)
+![image-20200510215729989](./pic/image-20200510215729989.png)
 
 真实的操作系统中往往是根据进程组来对程序进行管理的，为什么？
 
@@ -18,7 +18,7 @@
 
 现在做一个类比。Kubernetes类比操作系统，容器类比进程，那么进程组呢？ 当然就是Pod啦！
 
-![image-20200510215943192](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510215943192.png)
+![image-20200510215943192](./pic/image-20200510215943192.png)
 
 要把一个HelloWorld程序跑起来，最自然的想法应该是起一个Docker容器，容器里放api、main、log、compute这四个进程。
 
@@ -34,7 +34,7 @@
 
 从上面可以知道，一个容器里运行多个进程/线程“不太可行”。
 
-![image-20200510220822848](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510220822848.png)
+![image-20200510220822848](./pic/image-20200510220822848.png)
 
 ```***于是便有了Pod***```
 
@@ -48,11 +48,11 @@ Pod就类比这里的“进程组”。
 
 Pod也是Kubernetes分配资源的一个单位，因为里面的容器要共享某些资源，所以Pod也是Kubernetes的原子调度单位。
 
-![image-20200510221344373](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510221344373.png)
+![image-20200510221344373](./pic/image-20200510221344373.png)
 
 如上图的yaml文件，定义了一个Pod类型，名字是HelloWorld。可以看到里面有四个容器，name分别为api、main、log、compute。四个容器在一个叫HelloWorld的Pod里，共享某些资源。
 
-![image-20200510222217251](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510222217251.png)
+![image-20200510222217251](./pic/image-20200510222217251.png)
 
 比如说现在有两个 Pod，它们需要运行在同一台宿主机上，那这样就属于亲密关系，调度器一定是可以帮助去做的。但是对于超亲密关系来说，有一个问题，即它必须通过 Pod 来解决。因为如果超亲密关系赋予不了，那么整个 Pod 或者说是整个应用都无法启动。
 
@@ -92,11 +92,11 @@ Kubernetes的做法是在每个Pod里面起一个小镜像Infra Container（汇�
 
 显然整个Pod里面必须Infra  container第一个启动。并且整个Pod的生命周期等同于Infra Container的生命周期，与其他容器无关。（这也是为什么K8S里运行去单独更新Pod里的某一个镜像，即：做这个操作整个Pod不会重建也不会重启。这是非常重要的一个设计）
 
-![image-20200510224918340](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510224918340.png)
+![image-20200510224918340](./pic/image-20200510224918340.png)
 
 **2、共享存储**
 
-![image-20200510225027066](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510225027066.png)
+![image-20200510225027066](./pic/image-20200510225027066.png)
 
 比如现在Pod里有两个容器，一个是Nginx，另一个是很普通的容器，在Nginx里放一些文件，能通过Nginx访问到，所以Nginx要share这个目录，要share文件或者目录非常简单，实际上就是把volume变成Pod level。然后同属于一个Pod的容器就都共享所有的Volume。
 
@@ -108,7 +108,7 @@ Kubernetes的做法是在每个Pod里面起一个小镜像Infra Container（汇�
 
 举例：我要发布一个Java写的应用：有一个WAR包需要放到Tomcat的web APP目录下面，这样就可以把它启动起来了。那么怎么把这样一个WAR包或Tomcat去发布呢？
 
-![image-20200510230109175](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510230109175.png)
+![image-20200510230109175](./pic/image-20200510230109175.png)
 
 方法一：WAR包和Tomcat都打包进一个镜像里。但是这样如果之后我要单独更新WAR包或者Tomcat都要重新做镜像，很不方便。
 
@@ -118,7 +118,7 @@ Kubernetes的做法是在每个Pod里面起一个小镜像Infra Container（汇�
 
 所以我们需要在本地Kubernetes上，没有分布式存储的情况下也能用能发布的方式。Kubernetes里这种方式叫做**Init Container**。
 
-![image-20200510230740511](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510230740511.png)
+![image-20200510230740511](./pic/image-20200510230740511.png)
 
 上图的yaml文件里定义了一个Init Container，这个Init Container只做一件事，就是把WAR包从镜像里拷贝到一个Volume里面，没别的了。
 
@@ -136,7 +136,7 @@ Init Container会比用户容器先启动，并且严格按照定义顺序来执
 
 Sidecar就是在Pod里面定义一些专门的容器，干一些辅助的工作。比如前面的Init Container负责把镜像里的WAR包拷贝到共享目录里面，以便Tomcat能够用起来。
 
-![image-20200510231716969](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510231716969.png)
+![image-20200510231716969](./pic/image-20200510231716969.png)
 
 还有一些其他操作：
 
@@ -156,7 +156,7 @@ Sidecar就是在Pod里面定义一些专门的容器，干一些辅助的工作�
 
 比如说前面提到的应用日志收集，业务容器将日志写在一个 Volume 里面，而由于 Volume 在 Pod 里面是被共享的，所以日志容器 —— 即 Sidecar 容器一定可以通过共享该 Volume，直接把日志文件读出来，然后存到远程存储里面，或者转发到另外一个例子。现在业界常用的 Fluentd 日志进程或日志组件，基本上都是这样的工作方式。
 
-![image-20200510232616404](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510232616404.png)
+![image-20200510232616404](./pic/image-20200510232616404.png)
 
 
 
@@ -168,7 +168,7 @@ Sidecar 的第二个用法，可以称作为代理容器 Proxy。什么叫做代
 
 所以说代理容器除了做了解耦之外，并不会降低性能，更重要的是，像这样一个代理容器的代码就又可以被全公司重用了。
 
-![image-20200510232627348](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510232627348.png)
+![image-20200510232627348](./pic/image-20200510232627348.png)
 
 
 
@@ -178,4 +178,4 @@ Sidecar 的第三个设计模式 —— 适配器容器 Adapter，什么叫 Adap
 
 
 
-![image-20200510232637809](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200510232637809.png)
+![image-20200510232637809](./pic/image-20200510232637809.png)
