@@ -2,7 +2,7 @@
 
 ## 一、需求来源
 
-![image-20200511171325799](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511171325799.png)
+![image-20200511171325799](./pic/image-20200511171325799.png)
 
 背景问题：如果我们直接管理集群中所有Pod，应用A、B、C的Pod，其实是散乱分布在集群中的。
 
@@ -16,7 +16,7 @@
 
 由于上面的问题，于是便有了Deployment。
 
-![image-20200511171815346](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511171815346.png)
+![image-20200511171815346](./pic/image-20200511171815346.png)
 
 如上图所示，Deployment将应用A、B、C分别规划到不同的Deployment中，每个Deployment管理一个相同应用的一组Pod，这组Pod我们认为它是相同的一个副本。Deployment做了这几件事情：
 
@@ -32,7 +32,7 @@
 
 举例：一个简单的Deployment的yaml文件
 
-![image-20200511172652368](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511172652368.png)
+![image-20200511172652368](./pic/image-20200511172652368.png)
 
 "apiVersion: apps/v1" ——Deployment当前所属的组是apps，版本是v1。
 
@@ -66,7 +66,7 @@ template字段就是pod的模板，这个template包含了两个部分：
 
 当我们创建了一个deployment的时候，可以通过kubectl get deployment看到deployment总体的一个状态。
 
-![image-20200511173705607](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511173705607.png) 
+![image-20200511173705607](./pic/image-20200511173705607.png) 
 
 DESIRED: 期望的pod数量是3个；
 
@@ -82,7 +82,7 @@ AGE: deployment创建的时长为80分钟。
 
 ```kubectl get pod```可以查看一下pod
 
-![image-20200511174026033](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511174026033.png)
+![image-20200511174026033](./pic/image-20200511174026033.png)
 
 结果有三个pod。
 
@@ -98,7 +98,7 @@ pod名字的格式为:
 
 ### 更新镜像
 
-![image-20200511175006634](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511175006634.png)
+![image-20200511175006634](./pic/image-20200511175006634.png)
 
 对给定的Deployment更新它所有pod的镜像版本可以执行一个kubectl命令：
 
@@ -124,13 +124,13 @@ pod名字的格式为:
 
 再加上```--to-revision=${version_number}```可以指定回滚到某一个具体的版本。
 
-![image-20200511180119374](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511180119374.png)
+![image-20200511180119374](./pic/image-20200511180119374.png)
 
 ### DeploymentStatus（Deployment的状态）
 
 ***每一个资源都有它的spec.status，Deployment也不例外。***
 
-![image-20200511180403200](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511180403200.png)
+![image-20200511180403200](./pic/image-20200511180403200.png)
 
 上图描述了Deployment的三个状态: processing、complete和failed。
 
@@ -154,7 +154,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231861-eb2722bf-0e99-45a3-a7ab-2e0e6fb865ad.png)
+![img](./pic/1564386231861-eb2722bf-0e99-45a3-a7ab-2e0e6fb865ad.png)
 
  
 
@@ -162,7 +162,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231818-008962ad-26a3-43a2-af9e-9a88484b78cc.png)
+![img](./pic/1564386231818-008962ad-26a3-43a2-af9e-9a88484b78cc.png)
 
  
 
@@ -174,7 +174,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231889-a81cdef3-fe77-44e4-9997-c7218f441981.png)
+![img](./pic/1564386231889-a81cdef3-fe77-44e4-9997-c7218f441981.png)
 
  
 
@@ -190,7 +190,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231867-d53b54ce-8458-4b72-8eae-82bb9a266ddf.png)
+![img](./pic/1564386231867-d53b54ce-8458-4b72-8eae-82bb9a266ddf.png)
 
  
 
@@ -202,7 +202,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231858-54bb1384-9edb-4d22-b6e6-9a55e1c72138.png)
+![img](./pic/1564386231858-54bb1384-9edb-4d22-b6e6-9a55e1c72138.png)
 
  
 
@@ -210,7 +210,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231800-62b39855-cf76-4e0c-8b15-e233492c9e56.png)
+![img](./pic/1564386231800-62b39855-cf76-4e0c-8b15-e233492c9e56.png)
 
  
 
@@ -218,7 +218,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231821-3f15849f-5bdd-4f26-9366-09c4a5ea71ba.png)
+![img](./pic/1564386231821-3f15849f-5bdd-4f26-9366-09c4a5ea71ba.png)
 
  
 
@@ -226,7 +226,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231888-f40b5d61-4996-4fa1-b218-3747f2c7ae57.png)
+![img](./pic/1564386231888-f40b5d61-4996-4fa1-b218-3747f2c7ae57.png)
 
  
 
@@ -234,7 +234,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231935-fa9c72d8-f771-4bde-94e6-254636bf5076.png)
+![img](./pic/1564386231935-fa9c72d8-f771-4bde-94e6-254636bf5076.png)
 
  
 
@@ -250,7 +250,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231914-96217074-a9cb-42a4-8eb3-b1e05ca8aa00.png)
+![img](./pic/1564386231914-96217074-a9cb-42a4-8eb3-b1e05ca8aa00.png)
 
  
 
@@ -262,11 +262,11 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231940-fbfaffaf-000a-4c61-88e5-53041eaa851e.png)
+![img](./pic/1564386231940-fbfaffaf-000a-4c61-88e5-53041eaa851e.png)
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231840-eefb1499-fa04-42d4-9b0d-ee0108004e05.png)
+![img](./pic/1564386231840-eefb1499-fa04-42d4-9b0d-ee0108004e05.png)
 
  
 
@@ -282,7 +282,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231823-4faf799b-cf35-4b1f-857b-c57288a3c874.png)
+![img](./pic/1564386231823-4faf799b-cf35-4b1f-857b-c57288a3c874.png)
 
  
 
@@ -290,7 +290,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
  
 
-![img](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/168324/1564386231937-3d87925c-7e00-4f2a-87d6-6f5b6b230573.png)
+![img](./pic/1564386231937-3d87925c-7e00-4f2a-87d6-6f5b6b230573.png)
 
  
 
@@ -302,7 +302,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
 ### 管理模式
 
-![image-20200511182050655](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511182050655.png)
+![image-20200511182050655](./pic/image-20200511182050655.png)
 
 管理模式：Deployment只负责管理不同版本的ReplicaSet，由ReplicaSet管理具体的pod副本数，每个replicaset对应的deployment template的一个版本。从上面的例子可以看出，每一次修改template，都会生成一个新的ReplicaSet，这个replicaset底下的pod其实都是相同的版本。
 
@@ -310,7 +310,7 @@ Failed: 如果在处理过程中遇到一些问题：比如拉取镜像失败啦
 
 ### Deployment控制器
 
-![image-20200511182550847](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511182550847.png)
+![image-20200511182550847](./pic/image-20200511182550847.png)
 
 Deployment控制器实现原理如上图。
 
@@ -322,7 +322,7 @@ Deployment控制器实现原理如上图。
 
 ### ReplicaSet控制器
 
-![image-20200511184538687](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511184538687.png)
+![image-20200511184538687](./pic/image-20200511184538687.png)
 
 当Deployment分配了ReplicaSet之后，ReplicaSet控制器本身也从Informer中watch一些事件，这些事件包含了ReplicaSet和Pod的事件。从队列中取出事件以后，ReplicaSet controller的逻辑很简单，就只管理副本数。即如果controller发现期望数量比pod数量大的话就会扩容，如果发现实际数量超过期望数量的话就会缩容/删除pod。
 
@@ -330,7 +330,7 @@ Deployment控制器实现原理如上图。
 
 ### 扩/缩容模拟
 
-![image-20200511185021426](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511185021426.png)
+![image-20200511185021426](./pic/image-20200511185021426.png)
 
 上图是扩容模拟，原本deployment的副本数是2，对应的replicaset有pod1和pod2。之后我们修改了deployment的副本数为3，controller就会把replicas同步到当前版本的ReplicaSet中，这个replicaset发现当前只有两个pod，不满足数量3个，于是创建了一个新的pod3。
 
@@ -338,7 +338,7 @@ Deployment控制器实现原理如上图。
 
 发布的情况稍微复杂一些。
 
-![image-20200511185352824](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511185352824.png)
+![image-20200511185352824](./pic/image-20200511185352824.png)
 
 如上图所示，Deployment初始的模板为template1，对应的replcaset为ReplicaSet1下有三个Pod: pod1、pod2、pod3。这时我们修改了template中的镜像Image。于是模板就变为template2，对应的replicaset为ReplicaSet2。controller这时会逐渐修改两个replicaset中pod的数量，它会逐渐增加ReplicaSet2中pod的数量直到达到期望数量，并逐渐减小ReplicaSet1中pod的数量直到为0。
 
@@ -348,7 +348,7 @@ Deployment控制器实现原理如上图。
 
 假设刚才的发布模拟pod4～6已经发布完成，但这时发现了新版本的问题，于是要做回滚回退到之前的版本，不管是通过rollout命令还是通过回滚修改template,其实都是把模板回滚为原来的旧版本template1。
 
-![image-20200511190020659](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511190020659.png)
+![image-20200511190020659](./pic/image-20200511190020659.png)
 
 这里有点类似发布模拟了，也是逐渐增加ReplicaSet1中pod的数量直到达到期望数量，逐渐减小ReplicaSet2中pod的数量直到为0。
 
@@ -358,7 +358,7 @@ Deployment控制器实现原理如上图。
 
 来康康deployment中其他的spec字段。
 
-![image-20200511190333626](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511190333626.png)
+![image-20200511190333626](./pic/image-20200511190333626.png)
 
 · MinReadySeconds: Deployment会根据pod的状态是否为ready来判断它是否可用。但也不是这么简单，设置了MinReadySeconds之后，pod必须持续ready状态超过MinReadySeconds之后才被判断为available。即pod ready是pod available的必要非充分条件。
 
@@ -376,7 +376,7 @@ Deployment在滚动升级RollingUpdate中主要提供了两个策略：一个是
 
 **MaxSurge: 滚动过程中最多存在多少个Pod超过预期replicas数量。**
 
-![image-20200511191245021](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511191245021.png)
+![image-20200511191245021](./pic/image-20200511191245021.png)
 
 比如前面的例子，replicaset都为3的deployment在发布的时候可能存在一个情况：新版本的replicaset和旧版本的replicaset都可能有两个pod，加起来就是4个，超过了我们期望的数量3个。这是因为默认的MaxUnavailable和MaxSurge都是25%，默认Deployment在发布的过程中可能有25%的replica是不可用的，也可能超过replica数量25%是可用的，最高可达125%replica数量。
 
