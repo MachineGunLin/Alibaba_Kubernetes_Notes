@@ -30,7 +30,7 @@ Job的功能：
 
 · 可以控制任务的并行度，根据并行度来确保pod运行过程中的并行次数和总体完成大小。
 
-![image-20200511232723972](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511232723972.png)
+![image-20200511232723972](./pic/image-20200511232723972.png)
 
 
 
@@ -38,7 +38,7 @@ Job的功能：
 
 ### Job语法
 
-![image-20200511232933025](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511232933025.png)
+![image-20200511232933025](./pic/image-20200511232933025.png)
 
 上图是一个job的yaml文件，可以看到kind类型是job，metadata有个name字段为pi，name就是指定这个job的名称，这个job的作用是计算（输出）圆周率。spec.template里面包含有pod的spec。
 
@@ -52,7 +52,7 @@ Job的功能：
 
 ### Job状态
 
-![image-20200511233616503](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511233616503.png)
+![image-20200511233616503](./pic/image-20200511233616503.png)
 
 Job创建完成后，可以通过```kubectl get jobs```命令来查看当前job的运行状态。得到的结果里有job的名称（NAME），当前完成了多少个(COMPLETIONS), job的持续时间(DURATION)。
 
@@ -64,7 +64,7 @@ DURATION主要是我们看job里面的实际业务到底运行了多长时间，
 
 ### 查看Pod
 
-![image-20200511234046638](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511234046638.png)
+![image-20200511234046638](./pic/image-20200511234046638.png)
 
 其实Job最后的执行单元还是Pod，所以我们查看一下Pod。
 
@@ -82,7 +82,7 @@ DURATION主要是我们看job里面的实际业务到底运行了多长时间，
 
 我们有时候有需求：希望job运行的时候最大化的并行，并行出n个pod去快速地执行。然而有时候我们节点数有限制，所以也不能让同时并行的pod数目过多，所以需要这么一个管道的概念，指定我们希望的最大并行数。job控制器可以帮我们做到。
 
-![image-20200511234936350](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511234936350.png)
+![image-20200511234936350](./pic/image-20200511234936350.png)
 
 重点关注上面的两个参数：completions和parallelism。
 
@@ -92,7 +92,7 @@ DURATION主要是我们看job里面的实际业务到底运行了多长时间，
 
 ### 查看并行job运行
 
-![image-20200511235350165](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200511235350165.png)
+![image-20200511235350165](./pic/image-20200511235350165.png)
 
 上图是这个job整体运行完毕后看到的效果，首先看到job的名字是param-1, duration是2分23秒，这是job创建的时间。
 
@@ -104,7 +104,7 @@ DURATION主要是我们看job里面的实际业务到底运行了多长时间，
 
 有一种job叫做Cronjob，也可以叫定时运行job。Cronjob和job大体上是相似的，唯一的不同是它可以设定一个时间。比如说几点几分执行这个job（很适合晚上做一些清理任务）。还可以设置几分钟执行一次、几小时执行一次等，这就是定时任务。
 
-![image-20200512000644227](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512000644227.png)
+![image-20200512000644227](./pic/image-20200512000644227.png)
 
 定时任务和job相比会有几个不同的字段：
 
@@ -130,7 +130,7 @@ DURATION主要是我们看job里面的实际业务到底运行了多长时间，
 
 这个是job的yaml文件：
 
-![image-20200512002530868](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512002530868.png)
+![image-20200512002530868](./pic/image-20200512002530868.png)
 
 ### Job的创建及运行验证
 
@@ -142,7 +142,7 @@ DURATION主要是我们看job里面的实际业务到底运行了多长时间，
 
 ```kubectl get pods```
 
-![image-20200512002635976](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512002635976.png)
+![image-20200512002635976](./pic/image-20200512002635976.png)
 
 可以发现有一个叫pi的job产生了，然后还产生了一个叫pi-mz58c的pod，- 后面的是随机数。
 
@@ -150,29 +150,29 @@ logs一下这个pod，可以看见这里打印出了圆周率。这里由于我�
 
 ```kubectl logs pi-tgfrq```
 
-![image-20200512003201136](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512003201136.png)
+![image-20200512003201136](./pic/image-20200512003201136.png)
 
 ### 并行job的编排文件
 
 job1.yaml文件如下：
 
-![image-20200512003858168](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512003858168.png)
+![image-20200512003858168](./pic/image-20200512003858168.png)
 
 ### 并行Job的创建及运行验证
 
 job跑起来，然后我们查看一下。
 
-![image-20200512004036012](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512004036012.png)
+![image-20200512004036012](./pic/image-20200512004036012.png)
 
 可以发现刚开始创建了两个paral-1的pod，因为刚开始，还处于ContainerCreating阶段，并不是running阶段。
 
-![image-20200512004122581](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512004122581.png)
+![image-20200512004122581](./pic/image-20200512004122581.png)
 
 过个十几秒再看，已经是running阶段了。
 
 过一段时间再看，pods更多了。而且可以明显看出来它们是分批执行的：
 
-![image-20200512004232335](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512004232335.png)
+![image-20200512004232335](./pic/image-20200512004232335.png)
 
 8个pods，两个pods一批并行运行。这正是我们想要的。
 
@@ -180,25 +180,25 @@ job跑起来，然后我们查看一下。
 
 cron.yaml :
 
-![image-20200512004725557](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512004725557.png)
+![image-20200512004725557](./pic/image-20200512004725557.png)
 
 ### Cronjob的创建及运行验证
 
 执行一下看看：
 
-![image-20200512004835949](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512004835949.png)
+![image-20200512004835949](./pic/image-20200512004835949.png)
 
 我们看看这个定时任务是不是每分钟产生一个：
 
 ```kubectl get jobs```
 
-![image-20200512005040720](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512005040720.png)
+![image-20200512005040720](./pic/image-20200512005040720.png)
 
 可以发现确实每分钟都会产生一个新的hello job。
 
 如果不去干扰它的话，它以后大概会每一分钟都会创建出一个新的job，除非我们什么时候指定它不可以再运行的时候它才会停止创建。我把restartPolicy改为never之后再删掉hello这个cronjob，就会发现不再创建新的job了：
 
-![image-20200512005429523](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512005429523.png)
+![image-20200512005429523](./pic/image-20200512005429523.png)
 
 CronJob其实主要是用来做一些清理任务或者说执行一些定时任务。
 
@@ -208,13 +208,13 @@ CronJob其实主要是用来做一些清理任务或者说执行一些定时任�
 
 ### Job管理模式
 
-![image-20200512005532070](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512005532070.png)
+![image-20200512005532070](./pic/image-20200512005532070.png)
 
 Job的架构设计是这样的。Job Controller主要去创建job相应的pod，然后job controller会去跟踪job的状态，及时地根据我们提交的一些配置重试或者继续创建。Job Controller还会自动添加label来跟踪对应的pod，并根据配置并行或者串行创建pod。
 
 ### Job控制器
 
-![image-20200512010128487](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512010128487.png)
+![image-20200512010128487](./pic/image-20200512010128487.png)
 
 上图是一个job控制器的主要流程。job的controller会watch API Server，我们每次提交一个job的yaml都会经过API Server传到etcd里面去，然后Job Controller会注册几个Handler，每当有添加、更新、删除等操作的时候，它会通过一个内存级的消息队列，发到controller里面。
 
@@ -242,11 +242,11 @@ DaemonSet是第二个控制器。如果没有它，会遇到几个问题：
 
 · 如果pod状态异常的时候，我们需要及时地监控这个节点异常，然后做一些监控或者汇报的一些操作，那么这个需求运用什么控制器来做？
 
-![image-20200512011455009](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512011455009.png)
+![image-20200512011455009](./pic/image-20200512011455009.png)
 
 ### DaemonSet：守护进程控制器
 
-![image-20200512011705289](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512011705289.png)
+![image-20200512011705289](./pic/image-20200512011705289.png)
 
 DaemonSet也是Kubernetes提供的一个default controller。它实际上是一个守护进程的控制器。可以做以下几个事情：
 
@@ -264,7 +264,7 @@ DaemonSet也是Kubernetes提供的一个default controller。它实际上是一�
 
 ### DaemonSet语法
 
-![image-20200512012118025](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512012118025.png)
+![image-20200512012118025](./pic/image-20200512012118025.png)
 
 上图给了个DeamonSet的yaml文件。
 
@@ -282,7 +282,7 @@ DaemonSet最适用的场景如下：
 
 ### 查看DeamonSet状态
 
-![image-20200512012909018](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512012909018.png)
+![image-20200512012909018](./pic/image-20200512012909018.png)
 
 可以用```kubectl get DaemonSet```或者```kubectl get ds```命令查看DaemonSet。可以看到DaemonSet返回值和deployment特别像，DESIRED、CURRENT之类的都是一个意思。当然说的都是pod啦。
 
@@ -290,7 +290,7 @@ NODE SELECTOR在DaemonSet里面非常有用。有时候我们可能希望只有�
 
 ### 更新DeamonSet
 
-![image-20200512013351780](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512013351780.png)
+![image-20200512013351780](./pic/image-20200512013351780.png)
 
 DeamonSet和deployment特别像，也有两种更新策略：一个是RollingUpdate, 另一个是OnDelete。
 
@@ -306,7 +306,7 @@ DeamonSet和deployment特别像，也有两种更新策略：一个是RollingUpd
 
 daemonset.yaml文件：
 
-![image-20200512014809139](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512014809139.png)
+![image-20200512014809139](./pic/image-20200512014809139.png)
 
 ### DaemonSet的创建与运行验证
 
@@ -314,7 +314,7 @@ daemonset.yaml文件：
 
 然后查看一下pod：```kubectl get pods```，发现产生了3个fluentd-elasticsearch pod，为什么产生3个这个pod？因为我这个集群里有三个节点，daemonset在每个节点都运行一个fluentd-elasticsearch，所以产生了三个pod。
 
-![image-20200512015435978](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512015435978.png)
+![image-20200512015435978](./pic/image-20200512015435978.png)
 
 ### DaemonSet的更新
 
@@ -322,7 +322,7 @@ daemonset.yaml文件：
 
 然后再查看一下更新的状态: ```kubectl rollout status ds/fluentd-elasticsearch```
 
-![image-20200512020120230](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512020120230.png)
+![image-20200512020120230](./pic/image-20200512020120230.png)
 
 可以看到DaemonSet默认是RollingUpdate的。滚动更新每个pod。RollingUpdate可以做到全自动化的更新，无人值守，更新的过程比较平滑，这样有利于我们在现场发布或者做一些其他操作。
 
@@ -336,7 +336,7 @@ daemonset.yaml文件：
 
 DaemonSet是一个controller，它最后真正的业务单元也是pod，DaemonSet其实和Job controller特别相似，也是通过controller去watch API Server的状态，然后及时地添加pod。唯一不同的是，它会监控节点的状态，节点新加入的时候会在节点上创建对应的pod，然后同时根据我们设置的一些约束affinity或者label去选择对应的节点。
 
-![image-20200512020604341](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512020604341.png)
+![image-20200512020604341](./pic/image-20200512020604341.png)
 
 ### DaemonSet控制器
 
@@ -348,4 +348,4 @@ DaemonSet和Job controller唯一的不同点在于：DaemonSet Controller需要�
 
 如果全部更新完了之后，它会把整个DaemonSet的状态更新到API Server上，完成最后全部的更新。
 
-![image-20200512021157445](C:\Users\Lin\AppData\Roaming\Typora\typora-user-images\image-20200512021157445.png)
+![image-20200512021157445](./pic/image-20200512021157445.png)
